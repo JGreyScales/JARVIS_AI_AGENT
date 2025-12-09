@@ -29,14 +29,32 @@ JOIN Commands c ON fc.commandID = c.commandID;
   '''
 }
 
+enum Action {
+  userAction
+  commandAction
+  familyAction
+}
+
+enum ActionType {
+  userUpdated
+  userDeleted
+  userCreated
+  commandUpdated
+  commandDeleted
+  commandCreated
+  commandExecuted
+  familyUpdated
+  familyDeleted
+  familyCreated
+}
 
 Table JARVIS_AI_AGENT.Users {
-  userID "integer unsigned" [pk, increment]
-  email varchar(254)
-  name varchar(20)
-  passwordHash char(32)
-  created_at timestamp
-  updated_at timestamp
+  userID "integer unsigned" [pk, increment, ref: - JARVIS_AI_AGENT.Transcripts.invokerID]
+  email varchar(254) [not null]
+  name varchar(20) [not null]
+  passwordHash char(32) [not null]
+  created_at timestamp [not null, default: "CURRENT_TIMESTAMP"]
+  updated_at timestamp [not null, default: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"]
 
   Note {
     '''
@@ -53,12 +71,12 @@ Table JARVIS_AI_AGENT.Users {
 }
 
 Table JARVIS_AI_AGENT.Families {
-  familyID "integer unsigned" [pk, increment]
-  familyName varchar(20)
+  familyID "integer unsigned" [pk, increment, ref: - JARVIS_AI_AGENT.Transcripts.familyInvokedInID]
+  familyName varchar(20) [not null, default: 'My Family']
   familySize "tinyint unsigned" [note: "GENERATED VIRTUAL AS ((SELECT COUNT(*) FROM JARVIS_AI_AGENT.UsersToFamilies WHERE familyID = Families.familyID))"]
   commandSize "tinyint unsigned" [note: "GENERATED VIRTUAL AS ((SELECT COUNT(*) FROM JARVIS_AI_AGENT.FamiliesToCommand WHERE familyID = FamiliesToCommand.familyID))"]
-  created_at timestamp
-  updated_at timestamp
+    created_at timestamp [not null, default: "CURRENT_TIMESTAMP"]
+  updated_at timestamp [not null, default: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"]
 
   Note {
     '''
@@ -76,11 +94,11 @@ Table JARVIS_AI_AGENT.Families {
 }
 
 Table JARVIS_AI_AGENT.Commands {
-  commandID "integer unsigned" [pk, increment]
-  commandName varchar(20)
-  commandExecution varchar(500)
-  created_at timestamp
-  updated_at timestamp
+  commandID "integer unsigned" [pk, increment, ref: - JARVIS_AI_AGENT.Transcripts.commandInvokedID]
+  commandName varchar(20) [not null]
+  commandExecution varchar(500) [not null]
+  created_at timestamp [not null, default: "CURRENT_TIMESTAMP"]
+  updated_at timestamp [not null, default: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"]
 
   Note {
     '''
@@ -94,9 +112,34 @@ Table JARVIS_AI_AGENT.Commands {
   }
 }
 
+Table JARVIS_AI_AGENT.Transcripts {
+  transcriptID "integer unsigned" [pk, increment]
+  transcriptTime timestamp [not null, default: "CURRENT_TIMESTAMP"]
+  action Action [not null]
+  actionType ActionType [not null]
+  invokerID "integer unsigned" [not null]
+  familyInvokedInID "integer unsigned" [null]
+  commandInvokedID "integer unsigned" [null]
+  
+  Note {
+    '''
+    PARTITION BY LIST (action_type) (
+    PARTITION p0 VALUES IN ('userUpdated', 'userDeleted', 'userCreated'),
+    PARTITION p1 VALUES IN ('commandUpdated', 'commandDeleted', 'commandCreated', 'commandExecuted'),
+    PARTITION p2 VALUES IN ('familyUpdated', 'familyDeleted', 'familyCreated'));
+    '''
+  }
+
+  indexes {
+    invokerID
+    familyInvokedInID
+    commandInvokedID
+  }
+}
+
 Table JARVIS_AI_AGENT.UsersToFamilies {
-  userID "integer unsigned"
-  familyID "integer unsigned"
+  userID "integer unsigned" [not null]
+  familyID "integer unsigned" [not null]
 
   NOTE {
     '''
@@ -111,8 +154,8 @@ Table JARVIS_AI_AGENT.UsersToFamilies {
 }
 
 Table JARVIS_AI_AGENT.FamiliesToCommand {
-  familyID "integer unsigned"
-  commandID "integer unsigned"
+  familyID "integer unsigned" [not null]
+  commandID "integer unsigned" [not null]
 
   NOTE {
     '''
@@ -130,4 +173,3 @@ Ref: JARVIS_AI_AGENT.UsersToFamilies.userID > JARVIS_AI_AGENT.Users.userID [dele
 Ref: JARVIS_AI_AGENT.UsersToFamilies.familyID > JARVIS_AI_AGENT.Families.familyID [delete: cascade, update: no action]
 Ref: JARVIS_AI_AGENT.FamiliesToCommand.familyID > JARVIS_AI_AGENT.Families.familyID [delete: cascade, update: no action]
 Ref: JARVIS_AI_AGENT.FamiliesToCommand.commandID > JARVIS_AI_AGENT.Commands.commandID [delete: cascade, update: no action]
-
