@@ -1,0 +1,133 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+Project JARVIS_AI_AGENT{
+  database_type: 'MySQL'
+  Note: '''
+
+## https://github.com/JGreyScales/JARVIS_AI_AGENT
+## precomputed views
+
+CREATE MATERIALIZED VIEW user_command_summary AS
+SELECT u.userID, f.familyID, c.commandID, c.commandName, c.commandExecution
+FROM Users u
+JOIN UsersToFamilies uf ON u.userID = uf.userID
+JOIN Families f ON uf.familyID = f.familyID
+JOIN FamiliesToCommand fc ON f.familyID = fc.familyID
+JOIN Commands c ON fc.commandID = c.commandID;
+
+CREATE MATERIALIZED VIEW user_to_families AS
+SELECT u.userID, f.familyID, f.familyName
+FROM Users u
+JOIN UsersToFamilies uf ON u.userID = uf.userID
+JOIN Families f ON uf.familyID = f.familyID
+
+CREATE MATERIALIZE VIEW families_to_commands AS
+SELECT f.familyID, c.commandID, c.commandName, c.commandExecution
+FROM Families f
+JOIN FamiliesToCommand fc ON f.familyID = fc.familyID
+JOIN Commands c ON fc.commandID = c.commandID;
+  '''
+}
+
+
+Table JARVIS_AI_AGENT.Users {
+  userID "integer unsigned" [pk, increment]
+  email varchar(254)
+  name varchar(20)
+  passwordHash char(32)
+  created_at timestamp
+  updated_at timestamp
+
+  Note {
+    '''
+      PARTITION BY HASH (userID)
+      PARTITIONS 4;
+    '''
+  }
+  
+  indexes {
+    userID
+    (userID, name)
+    (email, passwordHash)
+  }
+}
+
+Table JARVIS_AI_AGENT.Families {
+  familyID "integer unsigned" [pk, increment]
+  familyName varchar(20)
+  familySize "tinyint unsigned" [note: "GENERATED VIRTUAL AS ((SELECT COUNT(*) FROM JARVIS_AI_AGENT.UsersToFamilies WHERE familyID = Families.familyID))"]
+  commandSize "tinyint unsigned" [note: "GENERATED VIRTUAL AS ((SELECT COUNT(*) FROM JARVIS_AI_AGENT.FamiliesToCommand WHERE familyID = FamiliesToCommand.familyID))"]
+  created_at timestamp
+  updated_at timestamp
+
+  Note {
+    '''
+      PARTITION BY RANGE (familySize)
+      PARTITION p1 VALUES LESS THAN (3),
+      PARTITION p2 VALUES LESS THAN (7),
+      PARTITION p3 VALUES LESS THAN (13),
+      PARTITION p4 VALUES LESS THAN (MAXVALUE)
+    '''
+  }
+
+  indexes {
+    familyID
+  }
+}
+
+Table JARVIS_AI_AGENT.Commands {
+  commandID "integer unsigned" [pk, increment]
+  commandName varchar(20)
+  commandExecution varchar(500)
+  created_at timestamp
+  updated_at timestamp
+
+  Note {
+    '''
+      PARTITION BY HASH (commandID)
+      PARTITIONS 4;
+    '''
+  }
+
+  indexes {
+    commandID
+  }
+}
+
+Table JARVIS_AI_AGENT.UsersToFamilies {
+  userID "integer unsigned"
+  familyID "integer unsigned"
+
+  NOTE {
+    '''
+      PARTITION BY HASH (userID)
+      PARTITIONS 4;
+    '''
+  }
+
+  indexes {
+    (userID, familyID)
+  }
+}
+
+Table JARVIS_AI_AGENT.FamiliesToCommand {
+  familyID "integer unsigned"
+  commandID "integer unsigned"
+
+  NOTE {
+    '''
+      PARTITION BY HASH (familyID)
+      PARTITIONS 4;
+    '''
+  }
+
+  indexes {
+    (familyID, commandID)
+  }
+}
+
+Ref: JARVIS_AI_AGENT.UsersToFamilies.userID > JARVIS_AI_AGENT.Users.userID [delete: cascade, update: no action]
+Ref: JARVIS_AI_AGENT.UsersToFamilies.familyID > JARVIS_AI_AGENT.Families.familyID [delete: cascade, update: no action]
+Ref: JARVIS_AI_AGENT.FamiliesToCommand.familyID > JARVIS_AI_AGENT.Families.familyID [delete: cascade, update: no action]
+Ref: JARVIS_AI_AGENT.FamiliesToCommand.commandID > JARVIS_AI_AGENT.Commands.commandID [delete: cascade, update: no action]
+
