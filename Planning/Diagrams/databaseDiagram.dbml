@@ -112,6 +112,30 @@ Table JARVIS_AI_AGENT.Commands {
   }
 }
 
+Table JARVIS_AI_AGENT.GestureData {
+  gestureDataID "integer unsigned" [PK]
+  thumbX integer
+  thumbY integer
+  indexX integer
+  indexY integer
+  middleX integer
+  middleY integer
+  ringX integer
+  ringY integer
+  pinkyX integer
+  pinkyY integer
+
+  Note {
+    '''
+      PARTITION BY HASH (gestureDataID)
+    '''
+  }
+
+  indexes {
+    gestureDataID
+  }
+}
+
 Table JARVIS_AI_AGENT.Transcripts {
   transcriptID "integer unsigned" [pk, increment]
   transcriptTime timestamp [not null, default: "CURRENT_TIMESTAMP"]
@@ -173,3 +197,4 @@ Ref: JARVIS_AI_AGENT.UsersToFamilies.userID > JARVIS_AI_AGENT.Users.userID [dele
 Ref: JARVIS_AI_AGENT.UsersToFamilies.familyID > JARVIS_AI_AGENT.Families.familyID [delete: cascade, update: no action]
 Ref: JARVIS_AI_AGENT.FamiliesToCommand.familyID > JARVIS_AI_AGENT.Families.familyID [delete: cascade, update: no action]
 Ref: JARVIS_AI_AGENT.FamiliesToCommand.commandID > JARVIS_AI_AGENT.Commands.commandID [delete: cascade, update: no action]
+Ref: JARVIS_AI_AGENT.Commands.commandID - JARVIS_AI_AGENT.GestureData.gestureDataID [delete: cascade, update: cascade]
