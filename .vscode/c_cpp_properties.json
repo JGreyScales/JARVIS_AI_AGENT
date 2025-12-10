@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${vcpkgRoot}/x64-windows/include",
-                "${workspaceFolder}/BACKEND/Image Processor/OpenCV/OpenCV-MinGW-Build-OpenCV-4.1.1-x64/include"
+                "${workspaceFolder}/BACKEND/ImageProcessor/build/include",
+                "${workspaceFolder}/BACKEND/ImageProcessor/opencv-4.12.0/include"
             ],
             "defines": [
                 "_DEBUG",
