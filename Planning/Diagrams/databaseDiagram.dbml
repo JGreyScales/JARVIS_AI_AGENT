@@ -7,7 +7,7 @@ Project JARVIS_AI_AGENT{
 ## https://github.com/JGreyScales/JARVIS_AI_AGENT
 ## precomputed views
 
-CREATE MATERIALIZED VIEW user_command_summary AS
+CREATE TABLE user_command_summary AS
 SELECT u.userID, f.familyID, c.commandID, c.commandName, c.commandExecution
 FROM Users u
 JOIN UsersToFamilies uf ON u.userID = uf.userID
@@ -15,17 +15,75 @@ JOIN Families f ON uf.familyID = f.familyID
 JOIN FamiliesToCommand fc ON f.familyID = fc.familyID
 JOIN Commands c ON fc.commandID = c.commandID;
 
-CREATE MATERIALIZED VIEW user_to_families AS
+CREATE TABLE user_to_families AS
 SELECT u.userID, f.familyID, f.familyName
 FROM Users u
 JOIN UsersToFamilies uf ON u.userID = uf.userID
 JOIN Families f ON uf.familyID = f.familyID
 
-CREATE MATERIALIZE VIEW families_to_commands AS
+CREATE TABLE families_to_commands AS
 SELECT f.familyID, c.commandID, c.commandName, c.commandExecution
 FROM Families f
 JOIN FamiliesToCommand fc ON f.familyID = fc.familyID
 JOIN Commands c ON fc.commandID = c.commandID;
+
+CREATE TABLE gesture_to_command AS
+SELECT g.*, c.commandName, c.commandExecution
+FROM GestureData g
+JOIN Commands c ON g.gestureDataID = c.commandID;
+
+
+SET GLOBAL event_scheduler = ON;
+CREATE EVENT refresh_user_command_summary
+ON SCHEDULE EVERY 1 HOUR
+DO
+  BEGIN
+    TRUNCATE TABLE user_command_summary;
+    INSERT INTO user_command_summary
+    SELECT u.userID, f.familyID, c.commandID, c.commandName, c.commandExecution
+    FROM Users u
+    JOIN UsersToFamilies uf ON u.userID = uf.userID
+    JOIN Families f ON uf.familyID = f.familyID
+    JOIN FamiliesToCommand fc ON f.familyID = fc.familyID
+    JOIN Commands c ON fc.commandID = c.commandID;
+  END;
+
+CREATE EVENT refresh_user_to_families
+ON SCHEDULE EVERY 1 HOUR
+DO
+  BEGIN
+    TRUNCATE TABLE user_to_families;
+    INSERT INTO user_to_families
+    SELECT u.userID, f.familyID, f.familyName
+    FROM Users u
+    JOIN UsersToFamilies uf ON u.userID = uf.userID
+    JOIN Families f ON uf.familyID = f.familyID;
+  END;
+
+CREATE EVENT refresh_families_to_commands
+ON SCHEDULE EVERY 1 HOUR
+DO
+  BEGIN
+    TRUNCATE TABLE families_to_commands;
+    INSERT INTO families_to_commands
+    SELECT f.familyID, c.commandID, c.commandName, c.commandExecution
+    FROM Families f
+    JOIN FamiliesToCommand fc ON f.familyID = fc.familyID
+    JOIN Commands c ON fc.commandID = c.commandID;
+  END;
+
+
+CREATE EVENT refresh_gesture_to_command
+ON SCHEDULE EVERY 1 HOUR
+DO
+  BEGIN
+    TRUNCATE TABLE gesture_to_command;
+    INSERT INTO gesture_to_command
+    SELECT g.*, c.commandName, c.commandExecution
+    FROM GestureData g
+    JOIN Commands c ON g.commandID = c.commandID;
+  END;
+
   '''
 }
 
