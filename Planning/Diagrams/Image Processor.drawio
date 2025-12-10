@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.6">
+  <diagram name="Page-1" id="jqQw0uBdqmYFuvoZ-HDK">
+    <mxGraphModel dx="2025" dy="782" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Image Processor" vertex="1">
+          <mxGeometry height="344" width="420" x="50" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-2" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- imagePath: string" vertex="1">
+          <mxGeometry height="26" width="420" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-11" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- guiMode: bool" vertex="1">
+          <mxGeometry height="26" width="420" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-23" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- frame: cv::Mat" vertex="1">
+          <mxGeometry height="26" width="420" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-51" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- faces:&amp;nbsp;std::vector&amp;lt;cv::Rect&amp;gt;" vertex="1">
+          <mxGeometry height="26" width="420" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-41" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- face: Face Recognizer" vertex="1">
+          <mxGeometry height="26" width="420" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-3" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="420" y="156" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-18" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- nothing drawHands(cv::Mat&amp;amp; mask): void" vertex="1">
+          <mxGeometry height="26" width="420" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-16" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- nothing showCasePreview(cv::Mat&amp;amp; frame, cv::Mat&amp;amp; mask): void" vertex="1">
+          <mxGeometry height="26" width="420" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-15" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- processedImage imageMask(): cv::Mat&amp;nbsp;" vertex="1">
+          <mxGeometry height="26" width="420" y="216" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-4" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ numberOfFaces locateFaces(): int" vertex="1">
+          <mxGeometry height="24" width="420" y="242" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-6" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ userID authenticateFaces(): int" vertex="1">
+          <mxGeometry height="26" width="420" y="266" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-8" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ isHandDetected handsDetected(): bool" vertex="1">
+          <mxGeometry height="26" width="420" y="292" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-14" parent="9Qo1SQ8-pAeaoiBoRATZ-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ detectedGestureID detectGesture(): int" vertex="1">
+          <mxGeometry height="26" width="420" y="318" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-24" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Face Recongizer" vertex="1">
+          <mxGeometry height="268" width="420" x="600" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-25" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- recognizer: cv::Ptr&amp;lt;cv::face::LBPHFaceRecognizer&amp;gt;&amp;nbsp;" vertex="1">
+          <mxGeometry height="26" width="420" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-40" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- datasetPath: string" vertex="1">
+          <mxGeometry height="26" width="420" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-46" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ predictedLabel: string" vertex="1">
+          <mxGeometry height="26" width="420" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-45" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ confidence: double" vertex="1">
+          <mxGeometry height="26" width="420" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-29" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="420" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-42" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- nothing modelTrain(): void" vertex="1">
+          <mxGeometry height="26" width="420" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-21" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- nothing saveModel(): void" vertex="1">
+          <mxGeometry height="26" width="420" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-43" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- nothing loadModel(): void" vertex="1">
+          <mxGeometry height="26" width="420" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-47" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- nothing drawLabel(cv::Mat&amp;amp; frame): void" vertex="1">
+          <mxGeometry height="26" width="420" y="216" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-50" parent="9Qo1SQ8-pAeaoiBoRATZ-24" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- nothing predictFace(cv::Mat&amp;amp; frame, std::vector&amp;lt;cv::Rect&amp;gt; faces): void" vertex="1">
+          <mxGeometry height="26" width="420" y="242" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-48" edge="1" parent="1" source="9Qo1SQ8-pAeaoiBoRATZ-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Qo1SQ8-pAeaoiBoRATZ-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-52" edge="1" parent="1" source="9Qo1SQ8-pAeaoiBoRATZ-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Qo1SQ8-pAeaoiBoRATZ-50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Qo1SQ8-pAeaoiBoRATZ-53" edge="1" parent="1" source="9Qo1SQ8-pAeaoiBoRATZ-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="9Qo1SQ8-pAeaoiBoRATZ-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
