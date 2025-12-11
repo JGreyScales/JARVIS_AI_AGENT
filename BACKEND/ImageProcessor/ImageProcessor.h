@@ -29,7 +29,7 @@ public:
 
 
 
-        this->frame = cv::imread(imagePath);
+        this->frame = cv::imread(imagePath, cv::IMREAD_UNCHANGED);
         this->frameLoad = !this->frame.empty();
         if (!frameLoad) {
             std::cerr << "Error: Could not load image: " << imagePath << std::endl;
@@ -40,8 +40,8 @@ public:
     // locateFaces declaration
     int locateFaces() {
         cv::cvtColor(this->frame, this->greyscaleFrame, cv::COLOR_BGR2GRAY);
-        double sizeReducationPerSweep = 1.20;
-        int requiredPositivesForObject = 5;
+        double sizeReducationPerSweep = 1.33;
+        int requiredPositivesForObject = 4;
         this->faceFrontal.detectMultiScale(this->greyscaleFrame, this->faces, sizeReducationPerSweep, requiredPositivesForObject);
         return this->faces.size();
     }

@@ -15,39 +15,53 @@ class FaceRecongizer
 {
 private:
     cv::Ptr<cv::face::LBPHFaceRecognizer> model;
+    int thresholdMax = 100.0;
+    int thresholdMin = this->thresholdMax * 0.95 ;
+
 
     void createModel(){
-        this->model = cv::face::LBPHFaceRecognizer::create(1.2, 12, 12, 12, 400.0);
+        double backgroundGrabRadius = 1.0;
+        int matchingNeighborsRequired = 13;
+        int resolution = 8;
+
+        std::cout << "Model created with following params:\n    ";
+        std::cout << "Background Noise Grab Radius: " << backgroundGrabRadius << "\n    "; 
+        std::cout << "Matching Neighbors Required: " << matchingNeighborsRequired << "\n    "; 
+        std::cout << "Face Resolution: " << resolution << "x" << resolution << "\n    "; 
+        std::cout << "Rejection Threshold (MAX): " << thresholdMax << "\n    ";
+        std::cout << "Rejection Threshold (MIN): " << thresholdMin << std::endl;
+
+        this->model = cv::face::LBPHFaceRecognizer::create(backgroundGrabRadius, matchingNeighborsRequired, resolution, resolution, thresholdMax);
     }
 
     void modelTrain(){
-
         int ticker = 0;
         int fileTicker = 0;
         std::chrono::_V2::system_clock::time_point start = std::chrono::high_resolution_clock::now();
         std::filesystem::directory_iterator trainingData = std::filesystem::directory_iterator(DATASETPATH);
         for (std::filesystem::__cxx11::directory_entry user : trainingData){
             int imagesPerUser = 0;
-            ticker++;
             if (!user.is_directory()) {continue;}
+            ticker++;
+
             for (std::filesystem::__cxx11::directory_entry image : std::filesystem::directory_iterator(user.path())){
 
                 fileTicker++;
                 imagesPerUser++;
 
-                if (imagesPerUser > 15){
+                if (imagesPerUser > 20){
                     break;
                 }
 
-                cv::Mat img = cv::imread(image.path().string(), cv::IMREAD_GRAYSCALE);
+                cv::Mat img = cv::imread(image.path().string(), cv::IMREAD_REDUCED_GRAYSCALE_2);
 
                 if (img.empty()){continue;}
 
-                cv::resize(img, img, cv::Size(64, 64));
-                this->model->update(std::vector<cv::Mat>{img}, std::vector<int>{ticker}); // using update to reduce ram usage
+                cv::resize(img, img, cv::Size(200, 200));
+                this->model->update(std::vector<cv::Mat>{img}, std::vector<int>{ticker});
                 img.release();
             }
-            std::cout << "User: " << user.path().filename().string() << " Loaded so far: " << ticker << std::endl;
+            std::cout << "User: " << user.path().filename().string() << " has " << imagesPerUser << " Images" << std::endl;
         }
 
         std::cout << "Processed: " << ticker << " users and: " << fileTicker << " images" << std::endl;
@@ -106,7 +120,7 @@ public:
 
     // Constructor
     FaceRecongizer(){
-        createModel();
+        this->createModel();
         this->loadModel();
     }
 
@@ -126,11 +140,23 @@ public:
             cv::Mat faceROI = (*mask)(validRect);
 
             model->predict(faceROI, predictedLabel, confidence);
+            confidence = std::floor(confidence);
+
+            if (predictedLabel == -1){
+                std::cout << " Rejected by threshold (above maximum) ";
+                confidence = this->model->getThreshold() + 1;
+            }
+
+            if (confidence <= thresholdMin){
+                std::cout << " Rejected by threshold (below minimum) ";
+                predictedLabel = -1;
+            }
+
+            
             this->predictedLabels.push_back(predictedLabel);
             this->confidences.push_back(confidence);
-
             std::cout << " userID: " << predictedLabel;
-            std::cout << " confidence %: " << confidence << std::endl;
+            std::cout << " confidence: " << confidence << "/" << this->model->getThreshold() << std::endl;
         }
         return;
     }
