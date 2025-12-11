@@ -5,8 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${vcpkgRoot}/x64-windows/include",
-                "${workspaceFolder}/BACKEND/ImageProcessor/build/include",
-                "${workspaceFolder}/BACKEND/ImageProcessor/opencv-4.12.0/include"
+                "${workspaceFolder}/BACKEND/ImageProcessor/install/include"
             ],
             "defines": [
                 "_DEBUG",

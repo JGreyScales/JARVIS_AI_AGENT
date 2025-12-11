@@ -28,3 +28,8 @@
 *.exe
 *.out
 *.app
+
+
+*.jpg
+/BACKEND/ImageProcessor/models
+BACKEND/ImageProcessor/archive.zip
