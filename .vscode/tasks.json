@@ -17,7 +17,7 @@
                 "-lopencv_highgui4120",
                 "-lopencv_imgproc4120",
                 "-lopencv_face4120",
-                "-lopencv_objdetect4120"
+                "-lopencv_objdetect4120",
             ],
             "options": {
                 "cwd": "C:\\msys64\\mingw64\\bin"

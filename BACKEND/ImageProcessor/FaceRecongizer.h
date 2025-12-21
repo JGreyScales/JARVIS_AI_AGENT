@@ -15,13 +15,13 @@ class FaceRecongizer
 {
 private:
     cv::Ptr<cv::face::LBPHFaceRecognizer> model;
-    int thresholdMax = 100.0;
-    int thresholdMin = this->thresholdMax * 0.95 ;
+    int thresholdMax = 175.0;
+    int thresholdMin = this->thresholdMax * 0.80 ;
 
 
     void createModel(){
         double backgroundGrabRadius = 1.0;
-        int matchingNeighborsRequired = 13;
+        int matchingNeighborsRequired = 14;
         int resolution = 8;
 
         std::cout << "Model created with following params:\n    ";
@@ -57,7 +57,7 @@ private:
 
                 if (img.empty()){continue;}
 
-                cv::resize(img, img, cv::Size(200, 200));
+                cv::resize(img, img, cv::Size(120, 120));
                 this->model->update(std::vector<cv::Mat>{img}, std::vector<int>{ticker});
                 img.release();
             }
@@ -138,6 +138,7 @@ public:
             // get region of interest of each face and ensure its in the pixel bounds of the mask
             cv::Rect validRect = (*faces)[i] & cv::Rect(0, 0, mask->cols, mask->rows);
             cv::Mat faceROI = (*mask)(validRect);
+            cv::imshow("x", faceROI);
 
             model->predict(faceROI, predictedLabel, confidence);
             confidence = std::floor(confidence);

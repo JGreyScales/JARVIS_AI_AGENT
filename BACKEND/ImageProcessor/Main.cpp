@@ -1,7 +1,8 @@
 #include "ImageProcessor.h"
 
 int main() {
-    std::string imagePath = "group.jpeg";
+    std::cout << "Starting" << std::endl;
+    std::string imagePath = "training.jpg";
 
     ImageProcessor processor(imagePath);
 
