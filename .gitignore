@@ -31,5 +31,5 @@
 
 
 *.jpg
-/BACKEND/ImageProcessor/models
 BACKEND/ImageProcessor/archive.zip
+BACKEND/ImageProcessor/models/userModel.xml
