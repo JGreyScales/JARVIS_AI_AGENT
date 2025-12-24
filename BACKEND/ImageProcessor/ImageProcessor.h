@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "FaceRecongizer.h"
+#include "handLandmarks.h"
 
 #define faceFrontalModelPath "TrainingData/frontFaceData.xml"
 

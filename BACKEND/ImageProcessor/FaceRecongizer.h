@@ -1,6 +1,8 @@
 #ifndef FACE_RECOGNIZER_H
 #define FACE_RECOGNIZER_H
 
+#include "magicNums.h"
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/face.hpp>
 #include <filesystem>
