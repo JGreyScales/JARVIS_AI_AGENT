@@ -153,6 +153,7 @@ handLandmarks::handLandmarks(std::string pythonExecutor, std::string path)
 statusCodes handLandmarks::runScript()
 {
     char buffer[256];
+    // todo: make the command directory aware to allow the user to execute from any nested directory
     std::string command = this->pythonPath + " " + handLandmarksScriptName + " " + this->path;
     const char *c_command = command.c_str();
 
