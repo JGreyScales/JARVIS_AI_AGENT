@@ -2,14 +2,14 @@
 
 int main() {
     std::cout << "Starting" << std::endl;
-    // std::string imagePath = "training.jpg";
+    std::string imagePath = "training.jpg";
 
-    // ImageProcessor processor(imagePath);
+    ImageProcessor processor(imagePath);
 
-    // int faceCount = processor.locateFaces();
-    // std::cout << "Detected " << faceCount << " faces." << std::endl;
-    // processor.predictFaces();
-    // processor.showcasePreview();
+    int faceCount = processor.locateFaces();
+    std::cout << "Detected " << faceCount << " faces." << std::endl;
+    processor.predictFaces();
+    processor.showcasePreview();
 
     handLandmarks x("python", "hand.jpg");
 
