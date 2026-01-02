@@ -29,7 +29,10 @@
 *.out
 *.app
 
-
+# image processor
 *.jpg
 BACKEND/ImageProcessor/archive.zip
 BACKEND/ImageProcessor/models/userModel.xml
+
+# api
+*.env
