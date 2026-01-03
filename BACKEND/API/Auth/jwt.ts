@@ -7,7 +7,7 @@ class sessionToken {
 
     constructor(token: string = '') {
         this.token = token;
-        this.key = process.env.JWT_SECRET_KEY;
+        this.key = process.env.JWT_SECRET_KEY || undefined;
         this.userID = 0;
 
         if (this.key == undefined){
@@ -31,12 +31,19 @@ class sessionToken {
             clientTime: payload['clientTime']
         }
 
-        const token: string = jwt.sign(dataObject, this.key);
-        return token;
+        this.token = jwt.sign(dataObject, this.key)
+        return this.token;
     }
 
-    verifyData(payload: Record<string, string | number>): boolean {
-        return false;
+    verifyData(payload: Record<string, string | number>): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            jwt.verify(this.token, this.key, (err: any, payload: { userID: number | null; }) => {
+                if (err) return reject(false);
+                if (payload.userID == null) return reject(false)
+                this.userID = payload.userID;
+                resolve(true);
+            })
+        })
     }
 
 
