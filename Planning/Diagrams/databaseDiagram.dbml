@@ -172,16 +172,48 @@ Table JARVIS_AI_AGENT.Commands {
 
 Table JARVIS_AI_AGENT.GestureData {
   gestureDataID "integer unsigned" [PK]
-  thumbX integer
-  thumbY integer
-  indexX integer
-  indexY integer
-  middleX integer
-  middleY integer
-  ringX integer
-  ringY integer
-  pinkyX integer
-  pinkyY integer
+    wristX FLOAT
+    wristY FLOAT
+    thumbCarpometacarpalX FLOAT
+    thumbCarpometacarpalY FLOAT
+    thumbMCPX FLOAT
+    thumbMCPY FLOAT
+    thumbIPX FLOAT
+    thumbIPY FLOAT
+    thumbTipX FLOAT
+    thumbTipY FLOAT
+    indexMCPX FLOAT
+    indexMCPY FLOAT
+    indexPIPX FLOAT
+    indexPIPY FLOAT
+    indexDIPX FLOAT
+    indexDIPY FLOAT
+    indexTipX FLOAT
+    indexTipY FLOAT
+    middleMCPX FLOAT
+    middleMCPY FLOAT
+    middlePIPX FLOAT
+    middlePIPY FLOAT
+    middleDIPX FLOAT
+    middleDIPY FLOAT
+    middleTipX FLOAT
+    middleTipY FLOAT
+    ringMCPX FLOAT
+    ringMCPY FLOAT
+    ringPIPX FLOAT
+    ringPIPY FLOAT
+    ringDIPX FLOAT
+    ringDIPY FLOAT
+    ringTipX FLOAT
+    ringTipY FLOAT
+    pinkyMCPX FLOAT
+    pinkyMCPY FLOAT
+    pinkyPIPX FLOAT
+    pinkyPIPY FLOAT
+    pinkyDIPX FLOAT
+    pinkyDIPY FLOAT
+    pinkyTipX FLOAT
+    pinkyTipY FLOAT
 
   Note {
     '''
