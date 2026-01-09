@@ -172,48 +172,33 @@ Table JARVIS_AI_AGENT.Commands {
 
 Table JARVIS_AI_AGENT.GestureData {
   gestureDataID "integer unsigned" [PK]
-    wristX FLOAT
-    wristY FLOAT
-    thumbCarpometacarpalX FLOAT
-    thumbCarpometacarpalY FLOAT
-    thumbMCPX FLOAT
-    thumbMCPY FLOAT
-    thumbIPX FLOAT
-    thumbIPY FLOAT
-    thumbTipX FLOAT
-    thumbTipY FLOAT
-    indexMCPX FLOAT
-    indexMCPY FLOAT
-    indexPIPX FLOAT
-    indexPIPY FLOAT
-    indexDIPX FLOAT
-    indexDIPY FLOAT
-    indexTipX FLOAT
-    indexTipY FLOAT
-    middleMCPX FLOAT
-    middleMCPY FLOAT
-    middlePIPX FLOAT
-    middlePIPY FLOAT
-    middleDIPX FLOAT
-    middleDIPY FLOAT
-    middleTipX FLOAT
-    middleTipY FLOAT
-    ringMCPX FLOAT
-    ringMCPY FLOAT
-    ringPIPX FLOAT
-    ringPIPY FLOAT
-    ringDIPX FLOAT
-    ringDIPY FLOAT
-    ringTipX FLOAT
-    ringTipY FLOAT
-    pinkyMCPX FLOAT
-    pinkyMCPY FLOAT
-    pinkyPIPX FLOAT
-    pinkyPIPY FLOAT
-    pinkyDIPX FLOAT
-    pinkyDIPY FLOAT
-    pinkyTipX FLOAT
-    pinkyTipY FLOAT
+
+    wrist VECTOR(3)
+
+    thumbCarpometacarpal VECTOR(3)
+    thumbMCP VECTOR(3)
+    thumbIP VECTOR(3)
+    thumbTip VECTOR(3)
+
+    indexMCP VECTOR(3)
+    indexPIP VECTOR(3)
+    indexDIP VECTOR(3)
+    indexTip VECTOR(3)
+
+    middleMCP VECTOR(3)
+    middlePIP VECTOR(3)
+    middleDIP VECTOR(3)
+    middleTip VECTOR(3)
+
+    ringMCP VECTOR(3)
+    ringPIP VECTOR(3)
+    ringDIP VECTOR(3)
+    ringTip VECTOR(3)
+
+    pinkyMCP VECTOR(3)
+    pinkyPIP VECTOR(3)
+    pinkyDIP VECTOR(3)
+    pinkyTip VECTOR(3)
 
   Note {
     '''
