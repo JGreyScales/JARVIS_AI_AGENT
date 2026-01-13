@@ -36,3 +36,4 @@ BACKEND/ImageProcessor/models/userModel.xml
 
 # api
 *.env
+/BACKEND/API/node_modules
