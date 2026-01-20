@@ -22,7 +22,6 @@ class family {
         return result;
     }
 
-    
 }
 
 export default family
