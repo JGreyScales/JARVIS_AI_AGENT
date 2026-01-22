@@ -9,7 +9,6 @@ int main() {
     int faceCount = processor.locateFaces();
     std::cout << "Detected " << faceCount << " faces." << std::endl;
     processor.predictFaces();
-    processor.showcasePreview();
 
     handLandmarks x("python", "hand.jpg");
 
