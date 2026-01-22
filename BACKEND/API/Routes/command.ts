@@ -14,9 +14,10 @@ router.post("/", (req: Request, res: Response) => {
 router.get("/", async (req: Request, res: Response) => {
   const commandOBJ = new command();
   const result = await commandOBJ.getCommandFromID(req.body.commandID)
-  
-  
-  
+  if (result === false){
+    res.send(500);
+  }
+
   res.send({
     'commandID': commandOBJ.commandObj.commandID,
     'commandName': commandOBJ.commandObj.commandName,
