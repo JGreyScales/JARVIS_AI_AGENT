@@ -20,6 +20,15 @@ class commandsObject {
         this.updated_at = updated_at;
     }
 
+    displayCommandOBJ(){
+        console.log(`Instance: ${this}`)
+        console.log(`CommandID: ${this.commandID}`)
+        console.log(`GestureID: ${this.gestureID}`)
+        console.log(`CommandName: ${this.commandName}`)
+        console.log(`CommandExeuction: ${this.commandExecution}`)
+        console.log(`Created At: ${this.created_at}`)
+        console.log(`Updated At: ${this.updated_at}`)
+    }
 }
 
 export default commandsObject

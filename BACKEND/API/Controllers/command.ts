@@ -5,34 +5,33 @@ import Database from "../Database/database";
 class command {
     commandObj: commandsObject;
 
-    constructor(commandID: number) {
+    constructor() {
         this.commandObj = new commandsObject();
-        const db = new Database();
-        db.connect().then(() => {
-            this.getCommandFromID(commandID, db).then(() => {
-                db.close();
-            });
-        })
     }
 
-    async getCommandFromID(ID: number, DB: Database): Promise<boolean> {
+    async getCommandFromID(ID: number): Promise<boolean> {
         return new Promise(async (resolve, reject) =>{
-            var returnStatus: boolean = false;
+              const db = new Database();
+            await db.connect();
 
-            const queryString = `SELECT * FROM ${DB.commandsTable} WHERE commandID = ?`;
+            const queryString = `SELECT * FROM ${db.commandsTable} WHERE commandID = ?`;
             const queryParams = [ID]
 
-            const result = (await DB.fetchQuery(queryString, queryParams))[0];
-            
+            const rawResult = await db.fetchQuery(queryString, queryParams);
+            if (rawResult.length !== 1){
+                reject(false)
+            }
+            const result = rawResult[0]
             this.commandObj = new commandsObject(
-                result[0],
-                result[1],
-                result[2],
-                result[3],
-                result[4]
+                result.commandID,
+                result.commandName,
+                result.commandExecution,
+                result.created_at,
+                result.updated_at
             )
 
-            return returnStatus;
+            db.close();
+            resolve(true)
         })
 
     }
