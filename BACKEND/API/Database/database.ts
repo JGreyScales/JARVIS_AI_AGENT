@@ -175,6 +175,11 @@ class Database {
 
     await this.raiseSafety();
   }
+
+  static async getLastInsertID(db: Database): Promise<number> {
+      const query = "SELECT LAST_INSERT_ID() AS ID";
+      return (await db.fetchQuery(query, []))[0].ID;
+  }
 }
 
 export default Database;

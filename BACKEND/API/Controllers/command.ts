@@ -10,15 +10,15 @@ class command {
     }
 
     async getCommandFromID(ID: number): Promise<boolean> {
-        return new Promise(async (resolve, reject) =>{
-              const db = new Database();
+        return new Promise(async (resolve, reject) => {
+            const db = new Database();
             await db.connect();
 
             const queryString = `SELECT * FROM ${db.commandsTable} WHERE commandID = ?`;
             const queryParams = [ID]
 
             const rawResult = await db.fetchQuery(queryString, queryParams);
-            if (rawResult.length !== 1){
+            if (rawResult.length !== 1) {
                 reject(false)
             }
             const result = rawResult[0]
@@ -59,8 +59,29 @@ class command {
         db.close()
     }
 
-    createCommand() {
+    async createCommand(familyID: number): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            if (familyID === 0 || this.commandObj.commandExecution === "") {
+                console.log("Family ID or execution missing");
+                reject(false)
+            }
 
+            const db = new Database()
+            await db.connect()
+
+            const queryString = `INSERT INTO ${db.commandsTable} (commandName, commandExecution, created_at, updated_at) VALUES (?, ?, ?, ?)`
+            const queryParams: any[] = [this.commandObj.commandName, this.commandObj.commandExecution, this.commandObj.created_at, this.commandObj.updated_at]
+            console.log(await db.submitQuery(queryString, queryParams))
+
+            this.commandObj.commandID = await Database.getLastInsertID(db);
+
+            const bridgeQueryString = `INSERT INTO ${db.familiesToCommandTable} (familyID, commandID) VALUES (?, ?)`
+            const bridgeQueryParams = [familyID, this.commandObj.commandID]
+            console.log(await db.submitQuery(bridgeQueryString, bridgeQueryParams))
+
+            db.close()
+            resolve(true);
+        })
     }
 }
 

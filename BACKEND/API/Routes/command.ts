@@ -6,8 +6,15 @@ import Database from "../Database/database";
 const router = Router();
 
 // send a command request
-router.post("/", (req: Request, res: Response) => {
-  res.sendStatus(501); // Not implemented
+router.post("/", async (req: Request, res: Response) => {
+  const commandOBJ = new command();
+  const result = await commandOBJ.getCommandFromID(req.body.commandID)
+  if (result === false){
+    res.sendStatus(500)
+  }
+
+  commandOBJ.executeCommand();
+  res.sendStatus(200);
 });
 
 // retrieve a command's info
@@ -18,7 +25,7 @@ router.get("/", async (req: Request, res: Response) => {
     res.send(500);
   }
 
-  res.send({
+  res.status(200).send({
     'commandID': commandOBJ.commandObj.commandID,
     'commandName': commandOBJ.commandObj.commandName,
     'commandExeuction': commandOBJ.commandObj.commandExecution,
@@ -33,12 +40,20 @@ router.patch("/", (req: Request, res: Response) => {
 });
 
 // delete a command
-router.delete("/", (req: Request, res: Response) => {
-  res.sendStatus(501);
+router.delete("/", async (req: Request, res: Response) => {
+  const commandOBJ = new command();
+  const result = await commandOBJ.getCommandFromID(req.body.commandID)
+  if (result === false){
+    res.send(500);
+  }
+
+  // not awaited, allow server to delete when easiest
+  commandOBJ.deleteCommand();
+  res.sendStatus(200)
 });
 
 // create a new command
-router.put("/", (req: Request, res: Response) => {
+router.put("/", async (req: Request, res: Response) => {
   res.sendStatus(501);
 });
 
