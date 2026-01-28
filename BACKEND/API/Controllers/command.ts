@@ -5,8 +5,8 @@ import Database from "../Database/database";
 class command {
     commandObj: commandsObject;
 
-    constructor() {
-        this.commandObj = new commandsObject();
+    constructor(command: commandsObject = new commandsObject()) {
+        this.commandObj = command;
     }
 
     async getCommandFromID(ID: number): Promise<boolean> {
@@ -40,12 +40,46 @@ class command {
         console.log(this.commandObj.commandExecution)
     }
 
-    updateCommand() {
+    async updateCommand(commandObj: commandsObject) {
+        if (this.commandObj.commandID == 0){
+            console.log("command is not populated, aborting")
+            return;
+        }
 
+        const differences: Map<String, string | number | Date> = this.commandObj.getDifferencesForSQL(commandObj);
+        
+        if (differences.size == 0){
+            console.log("command has no differences, aborting");
+            return;
+        }
+    
+        const db = new Database()
+        await db.connect()
+
+        let queryString = `UPDATE ${db.commandsTable} SET`
+        let queryParams = []
+
+        for (const [key, value] of differences){
+            queryParams.push(value)
+            queryString += ` ${key} = ?,`
+        }
+        // get rid of the trailing comma
+        queryString = queryString.substring(0, -1);
+
+        // add a new updated at date to the object in the database
+        queryParams.push(new Date())
+        queryString += " updated_at = ? "
+
+        queryString += "WHERE commandID = ?"
+        queryParams.push(this.commandObj.commandID);
+
+        db.submitQuery(queryString, queryParams);
+        db.close();
     }
 
     async deleteCommand() {
         if (this.commandObj.commandID === 0) {
+            console.log("command is not populated, aborting")
             return
         }
 

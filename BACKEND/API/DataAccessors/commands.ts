@@ -1,4 +1,6 @@
-class commandsObject {
+import objectType from "./object";
+
+class commandsObject extends objectType {
     commandID: number;
     gestureID: number;
     commandName: string;
@@ -12,6 +14,7 @@ class commandsObject {
                 created_at: Date = new Date(),
                 updated_at: Date = new Date()
     ) {
+        super();
         this.commandID = commandID;
         this.gestureID = commandID;
         this.commandName = commandName;
@@ -20,14 +23,22 @@ class commandsObject {
         this.updated_at = updated_at;
     }
 
-    displayCommandOBJ(){
-        console.log(`Instance: ${this}`)
-        console.log(`CommandID: ${this.commandID}`)
-        console.log(`GestureID: ${this.gestureID}`)
-        console.log(`CommandName: ${this.commandName}`)
-        console.log(`CommandExeuction: ${this.commandExecution}`)
-        console.log(`Created At: ${this.created_at}`)
-        console.log(`Updated At: ${this.updated_at}`)
+    public getDifferences(other: commandsObject): Map<string, any> {
+        return super.getDifferences(other, this);
+    }
+
+    getDifferencesForSQL(commandOBJ: commandsObject){
+        let differences: Map<String, number | string | Date> = new Map();
+
+        if (this.commandName != commandOBJ.commandName){
+            differences.set('commandName', commandOBJ.commandName);
+        }
+
+        if (this.commandExecution != commandOBJ.commandExecution){
+            differences.set('commandExecution', commandOBJ.commandExecution)
+        }
+        
+        return differences;
     }
 }
 

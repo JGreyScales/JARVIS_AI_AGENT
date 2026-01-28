@@ -33,7 +33,6 @@ class sessionToken {
             iat: Math.floor(Date.now() / 1000) - 5,
             userID: payload['userID'],
             familyID: payload['familyID'],
-            clientTime: payload['clientTime']
         }
 
         this.token = jwt.sign(dataObject, this.key)
